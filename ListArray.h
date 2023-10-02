@@ -79,7 +79,7 @@ class ListArray : public List<T> {
 
                 }else{
 
-//                        std::out_of_range<<"la posición no es válida"<<std::endl;
+                     throw std::out_of_range ("la posición no es válida");
 
                 }
 
@@ -104,7 +104,7 @@ class ListArray : public List<T> {
 
 		}else{
 
-//			std::out_of_range<<"posición no válida"<<std::endl;
+                     throw std::out_of_range ("la posición no es válida");
 		
 		}
 	
@@ -131,7 +131,7 @@ class ListArray : public List<T> {
 			delete[] arr[pos];
 		}else{
 
-//			std::out_of_range<<"posición no válida"<< std::endl;
+		throw std::out_of_range("posición no válida");
 		}
 	}	
 
@@ -143,9 +143,10 @@ class ListArray : public List<T> {
 
 		}else{
 					
-//			std::out_of_range<<"posición no válida"<<std::endl;
-
-		}	
+		
+		throw std::out_of_range("posición no válida");
+                
+                }	
 
 
 
