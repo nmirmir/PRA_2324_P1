@@ -1,5 +1,6 @@
 #include <ostream>
 #include<iostream>
+#include<exception>
 #include "List.h"
 
 template <typename T> 
@@ -27,16 +28,19 @@ class ListArray : public List<T> {
 
 	void resize(int new_size){
 	
-			
+		T* arr_new = new T[new_size];			
 		
 
-		for(int pos; pos < new_size; pos++){
+		for(int pos = 0; pos < new_size; pos++){
 			
-			arr[new_size] = arr[new_size];
+			arr_new[pos] = arr[pos];                        
 
 		}
 
-		delete[] arr;
+                delete[] arr;
+
+                arr = arr_new;
+
 	
 	}
   
@@ -44,26 +48,55 @@ class ListArray : public List<T> {
     public:
 //Método constructor sin argumentos. Se encargará de reservar memoria dinámica para crear un array de MINSIZE elementos de tipo T, además de inicializar el resto de atributos de instancia. 
 
-        ListArray();
+        ListArray(){
+
+                MINSIZE = 2;
+
+                T* arr = new T[MINSIZE];
+
+                n = 0;
+
+                max = MINSIZE;
+
+
+	}
 
 //Método destructor. Se encargará de liberar la memoria dinámica reservada.
 
-	~ListArray();
+	~ListArray(){
+
+                delete[] arr;
+
+        }
 
 //Sobrecarga del operador []. Devuelve el elemento situado en la posición pos. Lanza una excepción std::out_of_range si la posición no es válida (fuera del intervalo [0, size()-1]).
 
-	T operator[](int pos);
+	T operator[](int pos){
+
+                if(pos > size()-1 && pos < 0){
+
+                        return arr[pos];
+
+                }else{
+
+//                        std::out_of_range<<"la posición no es válida"<<std::endl;
+
+                }
+
+	}
 
 //Sobrecarga global del operador << para imprimir una instancia de ListArray<T> por pantalla. Recuerda incluir la cabecera <ostream> en el .h.
 
 	friend std::ostream& operator<<(std::ostream &out, const ListArray<T> &list){
 
-
+		out << list << std::endl;
+                
+                return out;
 
 	}
 
 
-	virtual void insert(int pos, T e){
+	void insert(int pos, T e) override {
 
 		if(e > 0 && e < size()){
 
@@ -71,25 +104,25 @@ class ListArray : public List<T> {
 
 		}else{
 
-			std::cout << "out_of_range"<<std::endl;
+//			std::out_of_range<<"posición no válida"<<std::endl;
 		
 		}
 	
 	}
 
-	virtual void append(T e){
+	void append(T e) override {
 
 		arr[max] = e;
 
 	}	
 
-	virtual void prepend(T e){
+	void prepend(T e) override  {
 
 		arr[0] = e;
 
 	}
 
-	virtual T remove(int pos){
+	T remove(int pos)override  {
 
 		if(pos < size()-1 && pos >= 0){
 
@@ -98,11 +131,11 @@ class ListArray : public List<T> {
 			delete[] arr[pos];
 		}else{
 
-			std::cout<< "out_of_range"<<std::endl;
+//			std::out_of_range<<"posición no válida"<< std::endl;
 		}
 	}	
 
-	virtual T get(int pos) const {
+	T get(int pos) const override  {
 
 		if(pos < size()-1 && pos >= 0){
 
@@ -110,7 +143,7 @@ class ListArray : public List<T> {
 
 		}else{
 					
-			std::cout<< "out_of_range"<<std::endl;
+//			std::out_of_range<<"posición no válida"<<std::endl;
 
 		}	
 
@@ -118,7 +151,7 @@ class ListArray : public List<T> {
 
 	}
 
-	virtual int search(T e) const {
+	int search(T e) const override  {
 
 		int i = 0;
 
@@ -137,7 +170,7 @@ class ListArray : public List<T> {
 
 	}
 
-	virtual bool empty() const{
+	bool empty() const override   {
 
 		for(int i; i < size(); i++){
 
@@ -154,7 +187,7 @@ class ListArray : public List<T> {
 
 	}
 
-	virtual int size() const {
+	int size()const override  {
 
 		int tamanyo = 0;		
 
