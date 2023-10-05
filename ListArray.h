@@ -22,7 +22,7 @@ class ListArray : public List<T> {
 
 //Tamaño mínimo del array. Deberá inicializarse a 2. 
 
-	static const int MINSIZE;		
+	static const int MINSIZE = 2;		
 
 //Método privado que se encargará de redimensionar el array al tamaño especificado, con el objetivo de incrementar su capacidad (si está lleno), o bien para reducirla (si está "demasiado vacío"). Ver nota más abajo para más detalles.
 
@@ -41,7 +41,7 @@ class ListArray : public List<T> {
 
                 arr = arr_new;
 
-	
+                max = new_size;	
 	}
   
 
@@ -49,8 +49,6 @@ class ListArray : public List<T> {
 //Método constructor sin argumentos. Se encargará de reservar memoria dinámica para crear un array de MINSIZE elementos de tipo T, además de inicializar el resto de atributos de instancia. 
 
         ListArray(){
-
-                MINSIZE = 2;
 
                 T* arr = new T[MINSIZE];
 
@@ -95,25 +93,50 @@ class ListArray : public List<T> {
 
 	}
 
-
+       // inserta el elemento e en la posición pos. Lanza una excepción std::out_of_range si la posición pos no es válida (fuera del intervalo [0, size()]).
+                
 	void insert(int pos, T e) override {
 
-		if(e > 0 && e < size()){
+           int i = n + 1 ;
 
-			arr[pos] = e;
+             for(int y = i -1; y == pos; i++, y++){
 
-		}else{
+                if(n == size()-1){
 
                      throw std::out_of_range ("la posición no es válida");
-		
-		}
-	
+
+                     resize();
+
+                }else{
+
+
+                     arr[y] = arr[i];
+                     
+
+                }
+
+
+           }
+
+             arr[pos] = e;
+	     
+             n++;
+
 	}
+
+        //inserta un elemento al final de la lista, para ello habrá que tener en cuenta que haya  espacio en el la lista
 
 	void append(T e) override {
 
+            if(e > size()-1){
+
+                throw std::out_of_range("posición no válida");
+
+            }else{
+
 		arr[max] = e;
 
+            }
 	}	
 
 	void prepend(T e) override  {
@@ -122,19 +145,34 @@ class ListArray : public List<T> {
 
 	}
 
-	T remove(int pos)override  {
+        //Elimina y devuelve el elemento situado en la posición pos. Lanza una excepción std::out_of_range si la posición no es válida (fuera del intervalo [0, size()-1]).
 
-		if(pos < size()-1 && pos >= 0){
+	T remove(int pos) override  {
 
-			return arr[pos];	
-	
-			delete[] arr[pos];
-		}else{
+            int i = n + 1, var_ret_pos = arr[pos];
 
-		throw std::out_of_range("posición no válida");
-		}
+            for(int y = i -1; y == pos; y--, i++ ){
+
+                if(pos > size()-1 || pos < 0){
+
+		        throw std::out_of_range("posición no válida");
+
+                }else{
+
+                        arr[y] = arr[i];
+ 
+                }
+                
+
+
+            }
+	        
+                return var_ret_pos;	
+
+
+		
 	}	
-
+//Devuelve el elemento situado en la posición pos. Lanza una excepción std::out_of_range si la posición no es válida (fuera del intervalo [0, size()-1]).
 	T get(int pos) const override  {
 
 		if(pos < size()-1 && pos >= 0){
@@ -151,7 +189,7 @@ class ListArray : public List<T> {
 
 
 	}
-
+//Devuelve la posición en la que se encuentra la primera ocurrencia del elemento e, o -1 si no se encuentra.
 	int search(T e) const override  {
 
 		int i = 0;
@@ -173,35 +211,22 @@ class ListArray : public List<T> {
 
 	bool empty() const override   {
 
-		for(int i; i < size(); i++){
+		if(arr == nullptr){
 
-			if(arr[i]!= nullptr){
+                        return true;
 
-				return true;			
+                }else{
 
-			}
+                        return false;
 
-		}
-
-		return false;
+                }
 
 
 	}
 
-	int size()const override  {
+	int size() const override  {
 
-		int tamanyo = 0;		
-
-		for(tamanyo ; tamanyo < tamanyo++ ; tamanyo++){	
-
-			if(arr[tamanyo] == nullptr){
-
-				return tamanyo;
-			
-			}
-			
-		}
-
+                return max;
 	}
 
   
