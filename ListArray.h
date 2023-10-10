@@ -24,24 +24,48 @@ class ListArray : public List<T> {
 
 	static const int MINSIZE = 2;		
 
+
 //Método privado que se encargará de redimensionar el array al tamaño especificado, con el objetivo de incrementar su capacidad (si está lleno), o bien para reducirla (si está "demasiado vacío"). Ver nota más abajo para más detalles.
 
 	void resize(int new_size){
-	
-		T* arr_new = new T[new_size];			
-		
 
-		for(int pos = 0; pos < new_size; pos++){
+                if(new_size < max){
+
+                        T* arr_new = new T[new_size];
+
+                        max = new_size;
+
+		        for(int pos = 0; pos < max ; pos++){
 			
-			arr_new[pos] = arr[pos];                        
+			        arr_new[pos] = arr[pos];                        
 
-		}
+        		}
+
+                delete[] arr;
+                
+                arr = arr_new;
+                
+                }else{
+
+
+		        T* arr_new = new T[new_size];			
+		
+                        max = new_size;
+
+
+		        for(int pos = 0; pos < max; pos++){
+			
+			        arr_new[pos] = arr[pos];                        
+
+		        }       
 
                 delete[] arr;
 
                 arr = arr_new;
 
-                max = new_size;	
+                }
+
+
 	}
   
 
@@ -71,7 +95,7 @@ class ListArray : public List<T> {
 
 	T operator[](int pos){
 
-                if(pos > max-1 && pos < 0){
+                if(pos <= max-1 && pos >= 0){
 
                         return arr[pos];
 
@@ -97,18 +121,18 @@ class ListArray : public List<T> {
                 
 	void insert(int pos, T e) override {
 
-           int i = max -1;
+           int i = n + 1;
 
-             for(; i <= pos; i--){
+             for(; i -1 >= pos; i--){
 
                 if(n == max -1){
                      
                      int new_size = max * 2;
 
-                     throw std::out_of_range ("la posición no es válida");
-
                      resize(new_size);
 
+                     throw std::out_of_range ("la posición no es válida");
+                
                 }else{
 
 
@@ -130,24 +154,58 @@ class ListArray : public List<T> {
 
 	void append(T e) override {
 
-            if(e > max ){
+            if( n == max -1 ){
 
                 int new_size = max * 2;
 
-                throw std::out_of_range("posición no válida");
-
                 resize(new_size);
 
+                arr[n + 1] = e;
+
+                throw std::out_of_range("posición no válida");
+            
             }else{
 
-		arr[max] = e;
+		arr[n + 1] = e;
 
             }
+            n++;
 	}	
 
 	void prepend(T e) override  {
 
-		arr[0] = e;
+            if( n == max -1 ){
+
+                throw std::out_of_range("posición no válida");
+                
+                int new_size = max * 2;
+
+                resize(new_size);
+
+                for(int i = n, pos = 0; pos <= n  ; i--, pos++){
+
+                        arr[i + 1] = arr[i];
+
+                }
+
+                arr[0] = e;
+
+
+            }else{
+
+                
+                for(int i = 0, pos = 0; pos <= n; i--, pos++){
+
+                        arr[i + 1] = arr[i];
+
+
+                }
+
+                arr[0] = e;
+            
+            }
+
+                n++;
 
 	}
 
@@ -155,21 +213,18 @@ class ListArray : public List<T> {
 
 	T remove(int pos) override  {
 
-            int i = pos + 1, var_ret_pos = arr[pos];
+            int var_ret_pos = arr[pos];
 
-            for(; i -1 == pos; i++ ){
+            for(int i = pos +1; i <= n; i++){
 
                 if(pos > max -1 && pos < 0){
                         
-                        int new_size = max * 2;
-
 		        throw std::out_of_range("posición no válida");
                         
-                        resize(new_size);
 
                 }else{
 
-                        arr[i] = arr[i -1];
+                        arr[i-1] = arr[i];
  
                 }
                 
@@ -186,14 +241,14 @@ class ListArray : public List<T> {
 	
         T get(int pos) const override  {
 
-		if(pos < max-1 && pos >= 0){
+		if(pos < max && pos >= 0){
 
 			return arr[pos];
 
 		}else{
 					
 		
-		throw std::out_of_range("posición no válida");
+		        throw std::out_of_range("posición no válida");
                 
                 }	
 
@@ -205,7 +260,7 @@ class ListArray : public List<T> {
 
 		int i = 0;
 
-		for( i ; i <= max-1 ; i++){
+		for(; i <= n ; i++){
 
 			if(arr[i] == e){
 
