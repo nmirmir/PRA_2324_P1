@@ -95,6 +95,30 @@ class ListLinked : public List<T> {
         
         void insert(int pos, T e){
 
+                if(pos < 0 || pos > size()){
+
+                        throw std::out_of_range("Posición no válida");
+
+                }else{
+
+                        Node<T>* aux_d = first; //nodo auxiliar que se situará a la derecha para guardar la dirección de memoria y que el que se inserte se "enganche a él"
+                        Node<T>* aux_i = first; //nodo auxiliar que se situará a la izquierda para que el nodo anterior al que se añada pueda recibir la dirección de memoria del siguente
+                        int i = 0; // contador de posición
+                        
+                        while(i <= pos ){
+
+                                aux_i = aux_d;
+                                aux_d = aux_d->next;
+                                i++;
+
+                        }
+                        // Ya estamos posicionados
+
+                        aux_i->next = new Node<T>(e, aux_d);
+                        
+
+
+                }
 
         }
 
@@ -102,12 +126,23 @@ class ListLinked : public List<T> {
 
         void append(T e){
 
+                Node<T>* aux = first;
+                
+                while(aux != nullptr){
+
+                        aux = aux->next;
+
+                }
+                aux->next = new Node<T>(e,nullptr);
+                
 
         }
 
         //Inserta el elemento e al principio de la lista.
 
         void prepend(T e){
+
+                first = new Node<T>(e,first->next);
 
 
         }
@@ -117,6 +152,31 @@ class ListLinked : public List<T> {
 
         T remove(int pos){
 
+                if(pos < 0 || pos > size()-1){
+
+                        throw std::out_of_range("posición no válida");
+
+                }else{
+
+                        Node<T>* aux_d = first;
+                        Node<T>* aux_i = first;
+                        int i = 0;
+
+                        while(i <= pos){
+
+                                aux_i = aux_d;
+                                aux_d = aux_d->next;
+
+                                i++;
+                        }
+               
+                        int ret = aux_d->data;
+                        aux_i = aux_d->next;
+                        delete aux_d;
+
+                }
+
+                return ret;
 
         }
 
@@ -124,6 +184,17 @@ class ListLinked : public List<T> {
 
         get(int pos){
 
+                Node<T>* aux = first;
+
+                int i = 0;
+
+                while(i <= pos){
+
+                        aux = aux->next;
+
+                }
+
+                return aux->data;
 
         }
 
