@@ -23,7 +23,7 @@ Shape::Shape(std::string color){
         }
 }
 
-std::string get_color(){ 
+std::string Shape::get_color()const{ 
 
         return color;
 
