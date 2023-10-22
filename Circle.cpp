@@ -6,27 +6,25 @@
                 // Método constructor por defecto.
                 // Crea un círculo del color que se haya establecido por defecto, centro (0,0) y radio 1.
 
-                Circle::Circle(){
+                Circle::Circle(): Shape() {
 
-                        color = "red";
-                        radius = 1.0;
-                        center = Point2D(0,0);
+                        Point2D::Point2D(center.x,center.y);
 
-                }
+               }
 
                 // Método constructor (con parámetros).
 
-                Circle::Circle(std::string color, Point2D center, double radius){
+//                Circle::Circle(std::string color, Point2D center, double radius){
 
                         
 
-                }
+  //              }
 
                 // Método consultor del atributo center.
 
                 Point2D Circle::get_center() const{
 
-                        return center;
+                        return Point2D(center.x, center.y);
 
                 }
 
@@ -35,7 +33,8 @@
                 void Circle::set_center(Point2D p){
 
                         
-                        center = p;
+                        center.x = p.x;
+                        center.y = p.y;
                 }
                 // Método consultor del atributo radius.
 
@@ -58,7 +57,7 @@
 
                std::ostream& operator<<(std::ostream &out, const Circle &c){
 
-                        out << c.center << c.radius << std::endl;
+                        out << c.center.x << c.center.y << c.radius << std::endl;
 
                         return out;
 
