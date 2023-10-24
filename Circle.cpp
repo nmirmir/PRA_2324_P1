@@ -8,7 +8,7 @@
 
                 Circle::Circle(): Shape(){
 
-                        color = "rojo";
+                        color = "rojo";// si no ho pose així em dona error i ns el perquè
 
                         center = new Point2D(center.x,center.y);
 
