@@ -6,11 +6,11 @@
                 // Método constructor por defecto.
                 // Crea un círculo del color que se haya establecido por defecto, centro (0,0) y radio 1.
 
-                Circle::Circle():{
+                Circle::Circle(): Shape(){
 
                         color = "rojo";
 
-                        Point2D *center = new Point2D(0,0);
+                        center = new Point2D(center.x,center.y);
 
                         radius = 1;
                }
