@@ -13,7 +13,7 @@ Shape::Shape(){
 
 Shape::Shape(std::string color){
 
-        if(color != "red" || color != "green" || color != "blue"){
+        if(color != "red" && color != "green" && color != "blue"){
 
                 throw std::invalid_argument("El color no es válido");
         }else{
@@ -31,7 +31,7 @@ std::string Shape::get_color()const{
 
 void Shape::set_color(std::string c){
 
-        if(c != "red" || c != "green" || c != "blue"){
+        if(c != "red" && c != "green" && c != "blue"){
 
                 throw std::invalid_argument("El color no es válido");
 

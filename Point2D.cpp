@@ -2,7 +2,7 @@
 #include<iostream>
 
 
-Point2D::Point2D(double x=0,double  y=0):x{x}, y{y}{
+Point2D::Point2D(double x ,double y):x{x}, y{y}{
 }
 
 double Point2D::distance(const Point2D &a, const Point2D &b){
@@ -26,8 +26,7 @@ bool operator != (const Point2D &a, const Point2D &b ){
 }
 
 std::ostream& operator<<(std::ostream &out, const Point2D &p){
-
-        out <<p.x << p.y << std::endl;
+        out << "("<<p.x << ","<< p.y <<")";
 
         return out;
 

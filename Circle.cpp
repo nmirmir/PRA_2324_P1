@@ -8,20 +8,16 @@
 
                 Circle::Circle(): Shape(){
 
-                        color = "rojo";// si no ho pose així em dona error i ns el perquè
-
-                        center = new Point2D(center.x,center.y);
+                        center = Point2D(0,0);
 
                         radius = 1;
                }
 
                 // Método constructor (con parámetros).
 
-                Circle::Circle(std::string color, Point2D center, double radius){
+                Circle::Circle(std::string color, Point2D center, double radius): Shape(color){
 
-                        this -> center.x = center.x;
-                        this -> center.y = center.y;
-                        this -> color = color;
+                        this -> center = center;
                         this -> radius = radius;                    
 
                }
@@ -30,7 +26,7 @@
 
                 Point2D Circle::get_center() const{
 
-                        return Point2D(center.x, center.y);
+                        return center;
 
                 }
 
@@ -38,9 +34,8 @@
 
                 void Circle::set_center(Point2D p){
 
-                        
-                        center.x = p.x;
-                        center.y = p.y;
+                        center = p;
+                
                 }
                 // Método consultor del atributo radius.
 
@@ -63,7 +58,7 @@
 
                std::ostream& operator<<(std::ostream &out, const Circle &c){
 
-                        out << c.center.x << c.center.y << c.radius << std::endl;
+                        out << "centro: "<< c.center << "radio: " << c.radius << "color: "<< c.color << std::endl;
 
                         return out;
 
@@ -76,14 +71,16 @@
 
                 double Circle::area() const {
 
-                        return 2 * 3.141598 *pow(radius,2);        
+                        return 3.141598 * pow(radius,2);        
 
                 }
 
                 //Método virtual puro. Calcula el perímetro de una figura.
                 
                 double Circle::perimeter() const {
-
+                        
+                       //operator<<(stream &out,)
+                        
                         return 2 * 3.141598 * radius;
 
                 }
@@ -94,8 +91,8 @@
                 // Para trasladar una figura, tendremos que trasladar sus vértices y moverlos todos a la vez con el incremento.
                 void Circle:: translate(double incX, double incY) {
 
-                        
-
+                        center.x = center.x + incX;
+                        center.y = center.y + incY;
 
                 }
 
@@ -103,9 +100,8 @@
 
                 void Circle::print(){
                         
-                        std::ostream& operator<<(std::ostream &out,const Circle &c);
+                        operator<<(std::cout, *this);
                         
-
                 }
 
 
